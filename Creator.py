@@ -64,7 +64,23 @@ if __name__ == "__main__":
         mc.setBlocks(x+9,y+5,z+9,x+9,y+7,z+9, blocks.AIR)
         mc.setBlocks(x+7,y+5,z+9,x+7,y+7,z+9, blocks.AIR)
         mc.setBlocks(x+9,y+5,z+7,x+9,y+7,z+7, blocks.AIR)
-    
+    def createRainbow(log):
+		pos = mc.player.getTilePos()
+
+		rainbowcol = ["red","orange","yellow","green","blue","indigo","violet"]
+		rainbow = [14,1,4,13,11,10,2]
+		radius = 30
+
+		#for i in range(16):
+		#   mc.setBlock(pos.x,pos.y + 2,pos.z + i,block.WOOL.id,i)
+		   
+		for angle in range(360):
+			for i in range(len(rainbow)):
+				log.insert(END, "Creating Layer " + i + ". Which is the colour " + rainbowcol[i])
+				x = pos.x + (radius - i) * math.cos(angle*math.pi/180)
+				y = 0 + (radius - i) * math.sin(angle*math.pi/180)
+				mc.setBlock(x,y,pos.z,block.WOOL.id,rainbow[i])
+				time.sleep(0.01)
 
     root = tk.ThemedTk()
     root.get_themes()
@@ -73,6 +89,7 @@ if __name__ == "__main__":
 
     log = Text(root, width='40', height='10')
     btn = ttk.Button(root, text="Build House", command=lambda: createHouse(log))
+    btn2 = ttk.Button(root, text="Build Rainbow", command=lambda: createRainbow(log))
     span = Label(root)
     span2 = Label(root)
     span3 = Label(root)
@@ -80,6 +97,7 @@ if __name__ == "__main__":
 
     span.pack()
     btn.pack(anchor=CENTER)
+    btn2.pack(anchor=CENTER)
     span2.pack()
     log.pack()
     span3.pack()
